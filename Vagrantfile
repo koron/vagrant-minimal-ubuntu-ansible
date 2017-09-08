@@ -14,12 +14,12 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     update-locale LANG=C.UTF-8 LANGUAGE=
     sed -i.bak -e 's!http://\\(archive\\|security\\).ubuntu.com/!ftp://ftp.jaist.ac.jp/!g' /etc/apt/sources.list
-    apt update
-    apt install -y ansible
   SHELL
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "playbook.yml"
+    ansible.verbose = true
+    ansible.install = true
     ansible.install_mode = :pip
   end
 end
